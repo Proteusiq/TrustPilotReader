@@ -28,11 +28,11 @@ How to use it:
 2. Gather Data 
     You can pass in different language e.g. Norwegian. Default is 'dk'
     
-    retured_dict = d.GatherData('no')
+    retured_dict = d.gather_data('no')
 
 3. Save Data
     You can pass location and file_name. Default is pwd and 'TrustPilotData' as name
-    d.SaveData()
+    d.save_data()
 
 4. Reading data
     df = pd.DataFrame(returned_dict)
@@ -96,7 +96,7 @@ class GetReviews:
     def __setitem__(self, key, item):
         self.companies_id[key] = item
 
-    def PageReview(self, reviewid, company, www='dk', verbose=True):
+    def page_review(self, reviewid, company, www='dk', verbose=True):
 
         rdata = requests.get(
             'https://{}.trustpilot.com/review/{}/jsonld?page=1'.format(www, reviewid)).json()
@@ -135,14 +135,14 @@ class GetReviews:
 
     # Reading query to df
 
-    def GatherData(self, www='dk'):
+    def gather_data(self, www='dk'):
         for company, review in self.companies_id.items():
-            GetReviews.PageReview(self, review, company, www)
+            GetReviews.page_review(self, review, company, www)
 
         return self.dictData
     # Writing file to desired location
 
-    def SaveData(self, location=None, file_name='TrustPilotData'):
+    def save_data(self, location=None, file_name='TrustPilotData'):
         #location = '/home/danpra/models/'
 
         get_location = location if location else ''
@@ -151,7 +151,7 @@ class GetReviews:
             df = pd.DataFrame(self.dictData)
         else:
             print('Firing GatherData')
-            GetReviews.GatherData(self)
+            GetReviews.gather_data(self)
             df = pd.DataFrame(self.dictData)
 
         df.to_pickle('{}{}.pkl'.format(get_location, file_name),
