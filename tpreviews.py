@@ -96,7 +96,7 @@ class GetReviews:
                 j += 1
 
             else:
-                continue # Todo: Do something if we have error in connection
+                pass # Todo: Do something if we have error in connection
 
     # Reading query to df
 
