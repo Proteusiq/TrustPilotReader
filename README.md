@@ -14,27 +14,27 @@ TrustPilot offers APIs to gather their data
 1. Initiate the class with either (a) passing a dictionary of companies as keys
     and companies TrustPilot id as items or (b) adding them with dictionary syntax.
 
-    e.g. a.
+    e.g.
     ```python
+            # way a
             id_dict = {'Skat':'470bce96000064000501e32d','DR':'4690598c00006400050003ee'}
             d = GetReviews(id_dict)
 
             # This ids dictionary can be loaded from text files e.g.
             lines = np.genfromtxt('companies_ids.csv', delimiter=',',
                                      dtype=str,skip_header=1) #skipped header
-            csv_dict = {key:item for key, item in lines} 
-      ```
-         
-         b. 
-      ```python
+            csv_dict = {key:item for key, item in lines}
+            
+            # way b 
             d = GetReviews()
             d['Skat'] = '470bce96000064000501e32d'
         ``` 
-    To get TrustPilot's company id, open www.trustpilot.com on your browser
-    right click to inspect the page, then select Network. Search the name
-    of the company on TrustPilot webpage. Filter: json
-    https://www.trustpilot.com/review/IDISHERE/jsonld
-   
+        
+
+To get TrustPilot's company id, open www.trustpilot.com on your browser
+right click to inspect the page, then select Network. Search the name
+of the company on TrustPilot webpage. Filter: json
+https://www.trustpilot.com/review/IDISHERE/jsonld   
 
 2. Gather Data 
     You can pass in different language e.g. Norwegian. Default is 'dk'
