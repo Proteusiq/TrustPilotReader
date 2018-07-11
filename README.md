@@ -33,9 +33,10 @@ e.g.
 ```
         
 
-To get TrustPilot's company id, open www.trustpilot.com on your browser
+To get TrustPilot's company id, open www.trustpilot.com on your browser,
 right click to inspect the page, then select Network. Search the name
-of the company on TrustPilot webpage. Filter: json
+of the company on TrustPilot webpage. Filter: json. Seee IDISHERE:
+
 https://www.trustpilot.com/review/IDISHERE/jsonld   
 
 ## 2. Gather Data
