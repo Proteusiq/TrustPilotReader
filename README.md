@@ -1,5 +1,5 @@
 # TrustPilotReader
-Unofficial TrustPilot Review Collector. Academic Use Only
+Unofficial TrustPilot reviews collector. For Academic Use Only
 
 # Unmatured Documetation :)
 
@@ -11,13 +11,13 @@ TrustPilot offers APIs to gather their data
 
 # How to use it:
 
-## 1. Initiat Class 
+# 1. Initiat Class 
 
     Initiate the class with either (a) passing a dictionary of companies as keys
     and companies TrustPilot id as items or (b) adding them with dictionary syntax.
 
     e.g.
-    ```python
+```python
             # way a
             id_dict = {'Skat':'470bce96000064000501e32d','DR':'4690598c00006400050003ee'}
             d = GetReviews(id_dict)
@@ -30,7 +30,7 @@ TrustPilot offers APIs to gather their data
             # way b 
             d = GetReviews()
             d['Skat'] = '470bce96000064000501e32d'
-        
+```
         
 
 To get TrustPilot's company id, open www.trustpilot.com on your browser
@@ -41,29 +41,29 @@ https://www.trustpilot.com/review/IDISHERE/jsonld
 ## 2. Gather Data
 
     You can pass in different language e.g. Norwegian. Default is 'dk'
-    ```python
+```python
     retured_dict = d.gather_data('no')
-    ```
+ ```
 ## 3. Save Data
 
     You can pass location and file_name. Default is pwd and 'TrustPilotData' as name
-    ```python
+```python
     d.save_data()
-    ```
+```
 ## 4. Reading Data
 
-    ```python
+```python
     df = pd.DataFrame(returned_dict)
-    ```
+ ```
     or
-    ```python
+```python
     df = pd.DataFrame(d.dictData)
-    ```
+```
     or from stored source
 
-    ```python
+```python
     df = pd.read_pickle('TrustPilotData.pkl', compression='gzip')
-    ```
+```
 # A full example:
 
 ```python
