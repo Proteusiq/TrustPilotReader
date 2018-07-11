@@ -28,7 +28,7 @@ TrustPilot offers APIs to gather their data
             # way b 
             d = GetReviews()
             d['Skat'] = '470bce96000064000501e32d'
-        ``` 
+        
         
 
 To get TrustPilot's company id, open www.trustpilot.com on your browser
