@@ -7,49 +7,7 @@ This code implements basic data scraping of TrustPilot [default:Danish] Reviews 
 It is a prototype to be used for academic reasons only.
 TrustPilot offers APIs to gather their data
  
-
-How to use it:
-
-1. Initiate the class with either (a) passing a dictionary of companies as keys
-    and companies TrustPilot id as items or (b) adding them with dictionary syntax.
-
-    e.g. a. id_dict = {'Skat':'470bce96000064000501e32d','DR':'4690598c00006400050003ee'}
-            d = GetReviews(id_dict)
-         
-         b. d = GetReviews()
-            d['Skat'] = '470bce96000064000501e32d' 
-    
-    To get TrustPilot's company id, open www.trustpilot.com on your browser
-    right click to inspect the page, then select Network. Search the name
-    of the company on TrustPilot webpage. Filter: json
-    https://www.trustpilot.com/review/IDISHERE/jsonld
-   
-
-2. Gather Data 
-    You can pass in different language e.g. Norwegian. Default is 'dk'
-    
-    retured_dict = d.gather_data('no')
-
-3. Save Data
-    You can pass location and file_name. Default is pwd and 'TrustPilotData' as name
-    d.save_data()
-
-4. Reading data
-    df = pd.DataFrame(returned_dict)
-
-    or
-
-    df = pd.DataFrame(d.dictData)
-
-    or from stored source
-    df = pd.read_pickle('TrustPilotData.pkl', compression='gzip')
-
-
-#TODOs:
-    Allow different saving formats e.g. df.to_XXX
-    Add more features
-    Write a better documetation
-
+How to use it: README.md
 """
 
 __author__ = "Prayson W. Daniel"
@@ -111,27 +69,34 @@ class GetReviews:
                     j=j, i=reviewpages))
 
             rdata = requests.get('https://{}.trustpilot.com/review/{}/jsonld'.format(www, reviewid),
-                                 params=self.payload).json()
+                                 params=self.payload)
+            
+            # Check if we caught a fish
+            if rdata.ok:
+                rdata = rdata.json()
 
-            for i, _ in enumerate(rdata['review']):
-                self.dictData['reviewerName'].append(
-                    rdata['review'][i]['author']['name'])
-                self.dictData['headline'].append(
-                    rdata['review'][i]['headline'])
-                self.dictData['inLanguage'].append(
-                    rdata['review'][i]['inLanguage'])
-                self.dictData['datePublished'].append(
-                    rdata['review'][i]['datePublished'])
-                self.dictData['reviewBody'].append(
-                    rdata['review'][i]['reviewBody'])
-                self.dictData['ratingValue'].append(
-                    rdata['review'][i]['reviewRating']['ratingValue'])
-                self.dictData['Company'].append(company)
-                i += 1
-            if verbose:
-                print('Mining {c} data from page {j}:{i} completed of {www}.trustpilot.com'.format(
-                    c=company, j=j, i=reviewpages, www=www))
-            j += 1
+                for i, _ in enumerate(rdata['review']):
+                    self.dictData['reviewerName'].append(
+                        rdata['review'][i]['author']['name'])
+                    self.dictData['headline'].append(
+                        rdata['review'][i]['headline'])
+                    self.dictData['inLanguage'].append(
+                        rdata['review'][i]['inLanguage'])
+                    self.dictData['datePublished'].append(
+                        rdata['review'][i]['datePublished'])
+                    self.dictData['reviewBody'].append(
+                        rdata['review'][i]['reviewBody'])
+                    self.dictData['ratingValue'].append(
+                        rdata['review'][i]['reviewRating']['ratingValue'])
+                    self.dictData['Company'].append(company)
+                    i += 1
+                if verbose:
+                    print('Mining {c} data from page {j}:{i} completed of {www}.trustpilot.com'.format(
+                        c=company, j=j, i=reviewpages, www=www))
+                j += 1
+
+            else:
+                continue # Todo: Do something if we have error in connection
 
     # Reading query to df
 
