@@ -13,19 +13,20 @@ TrustPilot offers APIs to gather their data
 
 # 1. Initiat Class 
 
-    Initiate the class with either (a) passing a dictionary of companies as keys
-    and companies TrustPilot id as items or (b) adding them with dictionary syntax.
+Initiate the class with either (a) passing a dictionary of companies as keys
+and companies TrustPilot id as items or (b) adding them with dictionary syntax.
 
-    e.g.
+e.g.
 ```python
             # way a
             id_dict = {'Skat':'470bce96000064000501e32d','DR':'4690598c00006400050003ee'}
             d = GetReviews(id_dict)
 
-            # This ids dictionary can be loaded from text files e.g.
+            # ids dictionary can be loaded from text files e.g.
             lines = np.genfromtxt('companies_ids.csv', delimiter=',',
                                      dtype=str,skip_header=1) #skipped header
             csv_dict = {key:item for key, item in lines}
+            d = GetReviews(csv_dict)
             
             # way b 
             d = GetReviews()
@@ -33,20 +34,21 @@ TrustPilot offers APIs to gather their data
 ```
         
 
-To get TrustPilot's company id, open www.trustpilot.com on your browser
+To get TrustPilot's company id, open www.trustpilot.com on your browser,
 right click to inspect the page, then select Network. Search the name
-of the company on TrustPilot webpage. Filter: json
+of the company on TrustPilot webpage. Filter: json. Seee IDISHERE:
+
 https://www.trustpilot.com/review/IDISHERE/jsonld   
 
 ## 2. Gather Data
 
-    You can pass in different language e.g. Norwegian. Default is 'dk'
+You can pass in different language e.g. Norwegian. Default is 'dk'
 ```python
     retured_dict = d.gather_data('no')
  ```
 ## 3. Save Data
 
-    You can pass location and file_name. Default is pwd and 'TrustPilotData' as name
+You can pass location and file_name. Default is pwd and 'TrustPilotData' as name
 ```python
     d.save_data()
 ```
@@ -55,11 +57,11 @@ https://www.trustpilot.com/review/IDISHERE/jsonld
 ```python
     df = pd.DataFrame(returned_dict)
  ```
-    or
+or
 ```python
     df = pd.DataFrame(d.dictData)
 ```
-    or from stored source
+or from stored source
 
 ```python
     df = pd.read_pickle('TrustPilotData.pkl', compression='gzip')
@@ -82,7 +84,7 @@ d.save_data(file_name='NoTrustPilotData')
 ```
 
 # TODOs:
-    * Allow different saving formats e.g. df.to_XXX
-    * Add more features
-    * Write a better documetation
+   * Allow different saving formats e.g. df.to_XXX
+   * Add more features
+   * Write a better documetation
 
