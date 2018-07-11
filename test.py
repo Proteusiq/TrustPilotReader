@@ -1,5 +1,5 @@
 import numpy as np
-from TrustPilot import GetReviews
+from tpreviews import GetReviews
 
 comp_dict = {'Mate': '587381110000ff00059a7856',
              'Spigo': '46d2b21a0000640005009a08'}
