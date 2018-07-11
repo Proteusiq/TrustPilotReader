@@ -22,10 +22,11 @@ e.g.
             id_dict = {'Skat':'470bce96000064000501e32d','DR':'4690598c00006400050003ee'}
             d = GetReviews(id_dict)
 
-            # This ids dictionary can be loaded from text files e.g.
+            # ids dictionary can be loaded from text files e.g.
             lines = np.genfromtxt('companies_ids.csv', delimiter=',',
                                      dtype=str,skip_header=1) #skipped header
             csv_dict = {key:item for key, item in lines}
+            d = GetReviews(csv_dict)
             
             # way b 
             d = GetReviews()
