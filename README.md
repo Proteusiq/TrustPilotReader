@@ -85,6 +85,7 @@ d.save_data(file_name='NoTrustPilotData')
 
 # TODOs:
    * Allow different saving formats e.g. df.to_XXX
+   * Split page_review funciton into connection and data parsing (better way to handler bad requests)
    * Add more features
    * Write a better documetation
 
