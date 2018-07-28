@@ -1,5 +1,11 @@
 # TrustPilotReader
-Unofficial TrustPilot reviews collector. For Academic Use Only
+Unofficial TrustPilot reviews collector. For Academic Use Only. READ: [TrustPilot Terms of Use](url
+https://legal.trustpilot.com/end-user-terms-and-conditions)
+
+# Disclamer:
+You, and you alone, are responsible for following TrustPilot terms and using this tool to gather their data. Respect
+their servers and be thoughtful when gathering large amount of data. 
+
 
 # Unmatured Documetation :)
 
@@ -89,3 +95,7 @@ d.save_data(file_name='NoTrustPilotData')
    * Add more features
    * Write a better documetation
 
+## [TrustPilot Terms of Use](url
+https://legal.trustpilot.com/end-user-terms-and-conditions)
+
+![c091684c-879c-4d6e-90c6-92fbc53cb676](https://user-images.githubusercontent.com/14926709/43354373-980e2882-924b-11e8-8b85-237f3e4b1dde.jpeg)
