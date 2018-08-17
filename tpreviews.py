@@ -58,6 +58,9 @@ class GetReviews:
 
         rdata = requests.get(
             'https://{}.trustpilot.com/review/{}/jsonld?page=1'.format(www, reviewid)).json()
+        # Change in API 17-08-2017 from rdata being dictionary to a list where 0 element is like original flow
+        # Next line is added to adopt this changes
+        rdata = rdata[0] # Added 17-08-2017 07:50 a.m    
         reviewpages = (int(rdata['aggregateRating']['reviewCount']) // 20) + 1
         print('Company: {}. Data from {}.trustpilot.com'.format(company, www))
         j = 1
@@ -74,6 +77,7 @@ class GetReviews:
             # Check if we caught a fish
             if rdata.ok:
                 rdata = rdata.json()
+                rdata = rdata[0] # Added 17-08-2017 07:50 a.m 
 
                 for i, _ in enumerate(rdata['review']):
                     self.dictData['reviewerName'].append(
