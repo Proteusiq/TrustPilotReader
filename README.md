@@ -38,12 +38,31 @@ e.g.
             d['Skat'] = '470bce96000064000501e32d'
 ```
         
+No business ids, no problem:
+```python
+        from trustpilotreviews import GetReviews
+        t = GetReviews.GetReviews()
+        mate_id = t.get_id('www.mate.bike')
+        if mate_id.ok:
+           print(mate.business_id)
+    
+ ```
+ 
+ Having multiple websites, well, no problem:
+ 
+ ```python
+       from trustpilotreviews import GetReviews
+       t = GetReviews()
+       ids = t.get_ids(['www.ford.dk','www.mate.bike'])
+       print(ids) # same as print(t) as ids are added to que
+       
+       data = t.get_reviews() # mine data for those ids    
+ ```
 
-To get TrustPilot's company id, open www.trustpilot.com on your browser,
-right click to inspect the page, then select Network. Search the name
-of the company on TrustPilot webpage. Filter: json. Seee IDISHERE:
+Want to save it on a database instead of Pandas, done:
 
-https://www.trustpilot.com/review/IDISHERE/jsonld   
+##Todo
+ 
 
 ## 2. Gather Data
 
