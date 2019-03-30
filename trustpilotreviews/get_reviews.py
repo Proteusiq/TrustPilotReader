@@ -199,12 +199,12 @@ class GetReviews:
             if response.ok:
                 id_data[response.business_name].append(response.business_id)
                 
-        with ThreadPoolExecutor(max_workers=len(queries)) as executor:
-            for business_id in queries:
-                executor.submit(mult_get_id, business_id)
+            with ThreadPoolExecutor(max_workers=len(queries)) as executor:
+               for business_id in queries:
+                   executor.submit(mult_get_id, business_id)
 
         
-        return pd.DataFrame(id_data).T.rename({0:'ids'},axis=1)
+           return pd.DataFrame(id_data).T.rename({0:'ids'},axis=1)
         
 
     def page_review(self, reviewid, business):
