@@ -15,7 +15,7 @@ TrustPilot offers APIs to gather their data
  
 # Get it from PyPI
 ```bash
-        pip install trustpilotreviews
+pip install trustpilotreviews
 ```
 
 
@@ -24,7 +24,7 @@ TrustPilot offers APIs to gather their data
 Import package
 
 ```python
-        from trustpilotreviews import GetReviews
+from trustpilotreviews import GetReviews
 ```
 
 # 1. Initiat Class 
@@ -34,56 +34,56 @@ and companies TrustPilot id as items or (b) adding them with dictionary syntax.
 
 e.g.
 ```python
-            # way a
-            id_dict = {'Skat':'470bce96000064000501e32d','DR':'4690598c00006400050003ee'}
-            d = GetReviews(id_dict)
+# way a
+id_dict = {'Skat':'470bce96000064000501e32d','DR':'4690598c00006400050003ee'}
+d = GetReviews(id_dict)
 
-            # ids dictionary can be loaded from text files e.g.
-            lines = np.genfromtxt('companies_ids.csv', delimiter=',',
-                                     dtype=str,skip_header=1) #skipped header
-            csv_dict = {key:item for key, item in lines}
-            d = GetReviews(csv_dict)
-            
-            # way b 
-            d = GetReviews()
-            d['Skat'] = '470bce96000064000501e32d'
+# ids dictionary can be loaded from text files e.g.
+lines = np.genfromtxt('companies_ids.csv', delimiter=',',
+                            dtype=str,skip_header=1) #skipped header
+csv_dict = {key:item for key, item in lines}
+d = GetReviews(csv_dict)
+
+# way b 
+d = GetReviews()
+d['Skat'] = '470bce96000064000501e32d'
 ```
         
 No business ids, no problem:
 ```python
-        from trustpilotreviews import GetReviews
-        t = GetReviews()
-        mate_id = t.get_id('www.mate.bike')
-        if mate_id.ok:
-           print(mate.business_id)
+from trustpilotreviews import GetReviews
+t = GetReviews()
+mate_id = t.get_id('www.mate.bike')
+if mate_id.ok:
+    print(mate.business_id)
 
-        data = t.get_reviews() 
+data = t.get_reviews() 
     
  ```
  
  Having multiple websites, well, no problem:
  
  ```python
-       from trustpilotreviews import GetReviews
-       t = GetReviews()
-       ids = t.get_ids(['www.ford.dk','www.mate.bike'])
-       print(ids) # same as print(t) as ids are added to que
-       
-       data = t.get_reviews() # mine data for those ids    
+from trustpilotreviews import GetReviews
+t = GetReviews()
+ids = t.get_ids(['www.ford.dk','www.mate.bike'])
+print(ids) # same as print(t) as ids are added to que
+
+data = t.get_reviews() # mine data for those ids    
  ```
 
 Want to save it on a database instead of Pandas, done:
 
  ```python
-       from trustpilotreviews import GetReviews
-       t = GetReviews()
-       ids = t.get_ids(['www.ford.dk','www.mate.bike'])
-       
-       # mine data for those ids 
-       t.get_reviews()
+from trustpilotreviews import GetReviews
+t = GetReviews()
+ids = t.get_ids(['www.ford.dk','www.mate.bike'])
 
-       # send them to in memory database
-       t.send_db('../data/','reviews')   
+# mine data for those ids 
+t.get_reviews()
+
+# send them to in memory database
+t.send_db('../data/','reviews')   
  ```
  
  
@@ -91,12 +91,12 @@ Want to save it on a database instead of Pandas, done:
 
 
 ```python
-    df = pd.DataFrame(t.dictData)
+df = pd.DataFrame(t.dictData)
 ```
 or from stored source
 
 ```python
-    df = pd.read_pickle('TrustPilotData.pkl')
+df = pd.read_pickle('TrustPilotData.pkl')
 ```
 # A full example:
 
