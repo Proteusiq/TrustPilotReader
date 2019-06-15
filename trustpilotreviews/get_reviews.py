@@ -15,7 +15,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 import dataset
 import pandas as pd
-import requests
+from requests import Session
 
 class GotData:
     '''Pretty Output
@@ -55,6 +55,16 @@ class GetReviews:
 
     def __init__(self, businesses_ids=None, language=None, verbose=True):
         
+        # Start a session
+        self.session = Session()
+        headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) '\
+                         'AppleWebKit/537.36 (KHTML, like Gecko) '\
+                         'Chrome/75.0.3770.80 Safari/537.36',
+          'Accept': 'application/json'
+        }   
+        # Add headers
+        self.session.headers.update(headers)
+
         self.verbose = verbose
         while language is None:
             language = input('Select language:\n\tdk for danish'
@@ -140,7 +150,7 @@ class GetReviews:
         
         url = 'https://www.trustpilot.com/businessunit/search'
         params = {'country':self.www,'query':query} 
-        r = requests.get(url, params=params)
+        r = self.session.get(url, params=params)
         
         if r.ok:
             data = r.json()
@@ -204,14 +214,14 @@ class GetReviews:
                    executor.submit(mult_get_id, business_id)
 
         
-           return pd.DataFrame(id_data).T.rename({0:'ids'},axis=1)
+            return pd.DataFrame(id_data).T.rename({0:'ids'},axis=1)
         
 
     def page_review(self, reviewid, business):
         '''
         generate DataFrame populated with TrustPilot data
         '''
-        rdata = requests.get(
+        rdata = self.session.get(
             f'https://{self.www}.trustpilot.com/review/{reviewid}/jsonld?page=1')
         # Change in API 17-08-2017 from rdata being dictionary to a list where 0 element is like original flow
         # Next line is added to adopt this changes
@@ -235,7 +245,7 @@ class GetReviews:
             if self.verbose:
                 print(f'Mining data from page {j}:{reviewpages} in progress ...')
 
-            rdata = requests.get(f'https://{self.www}.trustpilot.com/review/{reviewid}/jsonld',
+            rdata = self.session.get(f'https://{self.www}.trustpilot.com/review/{reviewid}/jsonld',
                                  params=self.payload)
             
             # Check if we caught a fish
@@ -286,3 +296,81 @@ class GetReviews:
                 executor.submit(self.gather_data, review, business)
         
         return self.dictData
+
+    # Storing Data
+    
+    def send_db(self,location='data', db_name='reviews',
+                table_name='trustdata'):
+        '''Send data to a data base
+       
+        This function save mined data to disk
+
+        Parameters
+        ----------
+        location : string
+            path to the folder
+        db_name : string
+            name of a database
+        table_name : string
+            name of a table in a daabase
+
+        Returns
+        -------
+        None
+            No value is return
+
+
+        How to read from database
+
+        >>> import dataset
+        >>> from stuf import stuf
+        >>> with dataset.connect('sqlite:///mydatabase.db', row_type=stuf) as db:
+        >>>     result = db.query('SELECT business, COUNT(*) c FROM trustdata GROUP BY ratingValue')
+        >>>     for row in result:
+        >>>         print(f"{row['business']:^20} | {row['c']:^20}")
+        '''
+        with dataset.connect(f'sqlite:///{location}/{db_name}.db') as db:
+            print(f'loading to data into {table_name} table in {db_name}.db ')
+            data = pd.DataFrame(self.dictData).T.to_dict()
+            data_d = [data[i] for i in data] # dataset expects
+            db[table_name].insert_many(data_d)
+            print(f'loading data completed')
+        
+        print(f'File saved:{location}{db_name}.db')
+    # Writing file to desired location
+    
+    def save_data(self, location='/data', file_name='TrustPilotData'):
+        '''Save Data to Disk
+       
+        This function save mined data to disk
+
+        Parameters
+        ----------
+        location : string
+            path to the folder
+        filename : string
+            name of the file
+
+        Returns
+        -------
+        None
+            No value is return
+
+        Raises
+        ------
+        ValueError
+            raised when there is no data to save
+       
+        '''    
+        #location = '/projectname/data/'
+
+        if self.dictData:
+            df = pd.DataFrame(self.dictData)
+            df.drop_duplicates(inplace=True)
+            df.to_pickle(f'{location}/{file_name}.pkl')
+
+            print(f'File saved:{location}{file_name}.pkl'
+                f'\nFile contains {df.shape[0]} rows')
+            
+        else:
+            raise ValueError('no data to save found')
