@@ -19,6 +19,6 @@ t.send_db('../data/','reviews')
 #                       dtype=str, skip_header=1)
 # csv_dict = {key: item for key, item in lines}
 
-# d = GetReviews(csv_dict)
-# d.gather_data('no') # Get Norwegian Reviews
+# d = GetReviews(csv_dict) # Select no to get Norwegian Reviews
+# d.gather_data() 
 # d.save_data(file_name='data/NoTrustPilotData')

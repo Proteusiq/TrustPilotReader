@@ -108,3 +108,7 @@ venv.bak/
 # Don't include pickled files
 
 *.pkl
+
+XDG_CACHE_HOME/
+
+*.egg_info

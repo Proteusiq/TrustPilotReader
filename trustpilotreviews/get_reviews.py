@@ -42,14 +42,14 @@ class GetReviews:
     example:
 
     >>> import numpy as np
-    >>> from .get_review import GetReviews
+    >>> from trustpilotreviews import GetReviews
     >>> # Dictionary from Data 
     >>> lines = np.genfromtxt('businesses_ids.csv', delimiter=',',
                         dtype=str, skip_header=1)
     >>> csv_dict = {key: item for key, item in lines}
     >>>
     >>> d = GetReviews(csv_dict)
-    >>> d.gather_data('no') # Get Norwegian Reviews
+    >>> d.gather_data()
     
     '''
 
