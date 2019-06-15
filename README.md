@@ -34,29 +34,37 @@ and companies TrustPilot id as items or (b) adding them with dictionary syntax.
 
 e.g.
 ```python
-# way a
+# way a: Using dictionary with business ids
 id_dict = {'Skat':'470bce96000064000501e32d','DR':'4690598c00006400050003ee'}
 d = GetReviews(id_dict)
 
 # ids dictionary can be loaded from text files e.g.
-lines = np.genfromtxt('companies_ids.csv', delimiter=',',
+lines = np.genfromtxt('data/business_ids.csv', delimiter=',',
                             dtype=str,skip_header=1) #skipped header
 csv_dict = {key:item for key, item in lines}
 d = GetReviews(csv_dict)
 
-# way b 
+# way b: Using dictionary assignment 
 d = GetReviews()
 d['Skat'] = '470bce96000064000501e32d'
 ```
         
 No business ids, no problem:
+
 ```python
 from trustpilotreviews import GetReviews
+
+# Initiate it. Language will be required
 t = GetReviews()
+
+# Pass in web-page address as it appears in trustpilot.com
 mate_id = t.get_id('www.mate.bike')
+
+# Check if everything is ok
 if mate_id.ok:
     print(mate.business_id)
 
+# Gather data from that id
 data = t.get_reviews() 
     
  ```
@@ -65,17 +73,23 @@ data = t.get_reviews()
  
  ```python
 from trustpilotreviews import GetReviews
+
 t = GetReviews()
+
+# pass multiple web-pages as a list
 ids = t.get_ids(['www.ford.dk','www.mate.bike'])
+
 print(ids) # same as print(t) as ids are added to que
 
-data = t.get_reviews() # mine data for those ids    
+# gather data for those ids  
+data = t.get_reviews()   
  ```
 
 Want to save it on a database instead of Pandas, done:
 
  ```python
 from trustpilotreviews import GetReviews
+
 t = GetReviews()
 ids = t.get_ids(['www.ford.dk','www.mate.bike'])
 
@@ -111,7 +125,9 @@ lines = np.genfromtxt('companies_ids.csv', delimiter=',',
 csv_dict = {key: item for key, item in lines}
 
 d = GetReviews(csv_dict) # Select no for Norwegian Reviews
-d.gather_data() 
+d.gather_data()
+
+# Saves as pandas dataframe pickle
 d.save_data(file_name='NoTrustPilotData')
 ```
 
