@@ -13,8 +13,19 @@ This code implements basic data scraping of TrustPilot [default:Danish] Reviews 
 It is a prototype to be used for academic reasons only.
 TrustPilot offers APIs to gather their data
  
+# Get it from PyPI
+```bash
+        pip install trustpilotreviews
+```
+
 
 # How to use it:
+
+Import package
+
+```python
+        from trustpilotreviews import GetReviews
+```
 
 # 1. Initiat Class 
 
@@ -41,10 +52,12 @@ e.g.
 No business ids, no problem:
 ```python
         from trustpilotreviews import GetReviews
-        t = GetReviews.GetReviews()
+        t = GetReviews()
         mate_id = t.get_id('www.mate.bike')
         if mate_id.ok:
            print(mate.business_id)
+
+        data = t.get_reviews() 
     
  ```
  
@@ -61,40 +74,35 @@ No business ids, no problem:
 
 Want to save it on a database instead of Pandas, done:
 
-##Todo
+ ```python
+       from trustpilotreviews import GetReviews
+       t = GetReviews()
+       ids = t.get_ids(['www.ford.dk','www.mate.bike'])
+       
+       # mine data for those ids 
+       t.get_reviews()
+
+       # send them to in memory database
+       t.send_db('../data/','reviews')   
+ ```
  
+ 
+## 2. Reading Data
 
-## 2. Gather Data
-
-You can pass in different language e.g. Norwegian. Default is 'dk'
-```python
-    retured_dict = d.gather_data('no')
- ```
-## 3. Save Data
-
-You can pass location and file_name. Default is pwd and 'TrustPilotData' as name
-```python
-    d.save_data()
-```
-## 4. Reading Data
 
 ```python
-    df = pd.DataFrame(returned_dict)
- ```
-or
-```python
-    df = pd.DataFrame(d.dictData)
+    df = pd.DataFrame(t.dictData)
 ```
 or from stored source
 
 ```python
-    df = pd.read_pickle('TrustPilotData.pkl', compression='gzip')
+    df = pd.read_pickle('TrustPilotData.pkl')
 ```
 # A full example:
 
 ```python
 import numpy as np
-from tpreviews import GetReviews
+from trustpilotreviews import GetReviews
 
 
 # Dictionary from Data 
@@ -102,8 +110,8 @@ lines = np.genfromtxt('companies_ids.csv', delimiter=',',
                       dtype=str, skip_header=1)
 csv_dict = {key: item for key, item in lines}
 
-d = GetReviews(csv_dict)
-d.gather_data('no') # Get Norwegian Reviews
+d = GetReviews(csv_dict) # Select no for Norwegian Reviews
+d.gather_data() 
 d.save_data(file_name='NoTrustPilotData')
 ```
 
