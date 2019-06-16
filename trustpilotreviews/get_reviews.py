@@ -16,6 +16,7 @@ from concurrent.futures import ThreadPoolExecutor
 import dataset
 import pandas as pd
 from requests import Session
+from tqdm import tqdm
 
 class GotData:
     '''Pretty Output
@@ -233,48 +234,43 @@ class GetReviews:
         rdata = rdata[0] # Added 17-08-2017 07:50 a.m 
          
         reviewpages = (int(rdata['aggregateRating']['reviewCount']) // 20) + 1
-        
-        print(f'business: {business}. {reviewpages}'
-            f' pages-reviews from {self.www}.trustpilot.com')
 
-        
-        j = 1
-        while j <= reviewpages:
-            
-            self.payload = {'page': j}
-            if self.verbose:
-                print(f'Mining data from page {j}:{reviewpages} in progress ...')
+        with tqdm(total=reviewpages, desc=f'{business} {reviewpages*20} reviews',
+                bar_format='{l_bar}{bar} [time left: {remaining} ]') as pbar:
+            j = 1
+            while j <= reviewpages:
+                
+                self.payload = {'page': j}
 
-            rdata = self.session.get(f'https://{self.www}.trustpilot.com/review/{reviewid}/jsonld',
-                                 params=self.payload)
-            
-            # Check if we caught a fish
-            if rdata.ok:
-                rdata = rdata.json()
-                rdata = rdata[0] # Added 17-08-2017 07:50 a.m 
-                for i, _ in enumerate(rdata['review']):
-                    self.dictData['reviewerName'].append(
-                        rdata['review'][i]['author']['name'])
-                    self.dictData['headline'].append(
-                        rdata['review'][i]['headline'])
-                    self.dictData['inLanguage'].append(
-                        rdata['review'][i]['inLanguage'])
-                    self.dictData['datePublished'].append(
-                        rdata['review'][i]['datePublished'])
-                    self.dictData['reviewBody'].append(
-                        rdata['review'][i]['reviewBody'])
-                    self.dictData['ratingValue'].append(
-                        rdata['review'][i]['reviewRating']['ratingValue'])
-                    self.dictData['business'].append(business)
-                    i += 1
-                if self.verbose:
-                    print(f'Mining {business} data from page {j}:{reviewpages} '
-                          f'completed of {self.www}.trustpilot.com')
-                j += 1
+                rdata = self.session.get(f'https://{self.www}.trustpilot.com/review/{reviewid}/jsonld',
+                                    params=self.payload)
+                
+                # Check if we caught a fish
+                if rdata.ok:
+                    rdata = rdata.json()
+                    rdata = rdata[0] # Added 17-08-2017 07:50 a.m 
+                    for i, _ in enumerate(rdata['review']):
+                        self.dictData['reviewerName'].append(
+                            rdata['review'][i]['author']['name'])
+                        self.dictData['headline'].append(
+                            rdata['review'][i]['headline'])
+                        self.dictData['inLanguage'].append(
+                            rdata['review'][i]['inLanguage'])
+                        self.dictData['datePublished'].append(
+                            rdata['review'][i]['datePublished'])
+                        self.dictData['reviewBody'].append(
+                            rdata['review'][i]['reviewBody'])
+                        self.dictData['ratingValue'].append(
+                            rdata['review'][i]['reviewRating']['ratingValue'])
+                        self.dictData['business'].append(business)
+                        i += 1
 
-            else:
-                pass # Todo: Do something if we have error in connection
+                    j += 1
 
+                else:
+                    pass # Todo: Do something if we have error in connection
+
+                pbar.update(1)
     # Reading query to df
 
     def gather_data(self, review, business):

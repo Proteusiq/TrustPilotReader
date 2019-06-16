@@ -248,6 +248,14 @@ parse = ">=1.6.6"
 
 [[package]]
 category = "main"
+description = "Fast, Extensible Progress Meter"
+name = "tqdm"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*"
+version = "4.32.1"
+
+[[package]]
+category = "main"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 name = "urllib3"
 optional = false
@@ -263,7 +271,7 @@ python-versions = ">=2.7"
 version = "0.5.1"
 
 [metadata]
-content-hash = "b4649b8737d859b70322dc0458458d8276437e7dace1f50394dc1b5f70175201"
+content-hash = "f1ddfff1f050fc4f652fd3233729a86639130121962039fbaa96d5be0e76d677"
 python-versions = "^3.6"
 
 [metadata.hashes]
@@ -292,5 +300,6 @@ requests = ["11e007a8a2aa0323f5a921e9e6a2d7e4e67d9877e85773fba9ba6419025cbeb4", 
 six = ["3350809f0555b11f552448330d0b52d5f24c91a322ea4a15ef22629740f3761c", "d16a0141ec1a18405cd4ce8b4613101da75da0e9a7aec5bdd4fa804d0e0eba73"]
 sqlalchemy = ["c7fef198b43ef31dfd783d094fd5ee435ce8717592e6784c45ba337254998017"]
 stuf = ["080a88b940ca844474c239cc7aab0c530187e637a9dc6df111a99e2955bb35db", "0b030fdd3a036c6da18696b37b2dfcaa6b0a4df87e208104ce4bcf653db81d53", "292841659ed615e342279117e8d4f88da1a7bbca9c2a1111441b1a2120ed405d", "b9765ee86532b0920cd08b18379c127c19565cb8d5ccb76b895b89900eccb78a", "b99f21da698af505108732c8201c06f7365fa2e47926d53eb54e4370e07d3b11", "e61d64a2180c19111e129d36bfae66a0cb9392e1045827d6495db4ac9cb549b0"]
+tqdm = ["0a860bf2683fdbb4812fe539a6c22ea3f1777843ea985cb8c3807db448a0f7ab", "e288416eecd4df19d12407d0c913cbf77aa8009d7fddb18f632aded3bdbdda6b"]
 urllib3 = ["b246607a25ac80bedac05c6f282e3cdaf3afb65420fd024ac94435cabe6e18d1", "dbe59173209418ae49d485b87d1681aefa36252ee85884c31346debd19463232"]
 zipp = ["8c1019c6aad13642199fbe458275ad6a84907634cc9f0989877ccc4a2840139d", "ca943a7e809cc12257001ccfb99e3563da9af99d52f261725e96dfe0f9275bc3"]
