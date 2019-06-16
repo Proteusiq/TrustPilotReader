@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "trustpilotreviews"
-version = "0.1.1"
+version = "0.1.2"
 description = "Unoffice TrustPilot API to download reviews scores and contents"
 authors = ["Prayson Wilfred Daniel <praysonwilfred@gmail.com>"]
 homepage = "https://github.com/Proteusiq/TrustPilotReader"
@@ -9,6 +9,7 @@ requires = [
     "dataset",
     "pandas",
     "requests",
+    "tqdm",
 ]
 requires-python = "3.6+"
 readme = "README.md"
