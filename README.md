@@ -1,6 +1,8 @@
 # TrustPilotReader
 Unofficial TrustPilot reviews collector. For Academic Use Only. READ: [TrustPilot Terms of Use](https://legal.trustpilot.com/end-user-terms-and-conditions)
 
+![](data/images/progress.png)
+
 # Disclamer:
 You, and you alone, are responsible for following TrustPilot terms and using this tool to gather their data. Respect
 their servers and be thoughtful when gathering large amount of data. 
@@ -103,6 +105,7 @@ t.send_db('../data/','reviews')
  
 ## 2. Reading Data
 
+![](data/images/load.png)
 
 ```python
 df = pd.DataFrame(t.dictData)
@@ -113,6 +116,8 @@ or from stored source
 df = pd.read_pickle('TrustPilotData.pkl')
 ```
 # A full example:
+
+![](data/images/example.png)
 
 ```python
 import numpy as np
