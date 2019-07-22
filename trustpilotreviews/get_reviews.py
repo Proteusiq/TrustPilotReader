@@ -7,6 +7,8 @@ This code implements basic data scraping of TrustPilot [default:Danish] Reviews 
 It is a prototype to be used for academic reasons only.
 TrustPilot offers APIs to gather their data
  
+# TODO
+Make the code follow Single Resposibility Principle (Design Pattern)
 """
 
 
